@@ -109,6 +109,33 @@
   details[open] summary::after { content:"−"; }
   details p { margin:0 0 16px; color:var(--mute); font-size:14px; }
 
+  /* Support pop-up shown after a download starts */
+  .modal { position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:20px;
+           background:rgba(0,0,0,.72); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+           opacity:0; visibility:hidden; transition:opacity .2s ease, visibility .2s; }
+  .modal.open { opacity:1; visibility:visible; }
+  .sheet { position:relative; width:100%; max-width:420px; background:var(--surface); border:1px solid var(--line); border-radius:22px;
+           padding:28px 24px 22px; text-align:center; box-shadow:0 30px 90px -20px rgba(255,43,43,.35);
+           transform:translateY(12px) scale(.98); transition:transform .2s ease; }
+  .modal.open .sheet { transform:none; }
+  .sheet .x { position:absolute; top:12px; right:12px; width:34px; height:34px; border-radius:10px; border:1px solid var(--line);
+              background:var(--surface2); color:var(--mute); font-size:20px; line-height:1; cursor:pointer; }
+  .sheet .x:hover { color:var(--text); border-color:#47474a; }
+  .sheet .ok { width:52px; height:52px; margin:0 auto 14px; border-radius:16px; display:grid; place-items:center;
+               background:#0f2a1d; border:1px solid #1d5a3c; }
+  .sheet h3 { margin:0; font-size:21px; letter-spacing:-.02em; }
+  .sheet .lead { margin:6px 0 0; color:var(--mute); font-size:14px; }
+  .sheet .lead a { color:var(--text); }
+  .sheet .ask { margin:22px 0 12px; padding-top:20px; border-top:1px solid var(--line); font-size:15px; color:var(--text); font-weight:600; }
+  .sheet .ask span { display:block; font-weight:400; color:var(--mute); font-size:13.5px; margin-top:3px; }
+  .support { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:13px 16px; border-radius:13px;
+             font-weight:700; font-size:15px; text-decoration:none; margin-top:10px; }
+  .support:hover { filter:brightness(1.07); }
+  .support.coffee { background:#ffdd00; color:#111; }
+  .support.yt { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; }
+  .sheet .later { margin-top:14px; background:none; border:0; color:var(--mute); font:inherit; font-size:13px; cursor:pointer; text-decoration:underline; }
+  .sheet .later:hover { color:var(--text); }
+
   footer { border-top:1px solid var(--line); margin-top:30px; padding:26px 0 40px; color:var(--mute); font-size:13px; display:flex; flex-wrap:wrap; gap:8px 20px; }
   footer .r { margin-left:auto; }
   @media (max-width:600px) { nav .links { display:none; } footer .r { margin-left:0; } }
@@ -262,6 +289,25 @@
   </footer>
 </div>
 
+<div class="modal" id="thanks" role="dialog" aria-modal="true" aria-labelledby="thanksTitle" aria-hidden="true">
+  <div class="sheet">
+    <button class="x" type="button" data-close aria-label="Close">×</button>
+    <div class="ok"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5fe0a0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></div>
+    <h3 id="thanksTitle">Your download is starting</h3>
+    <p class="lead"><span id="thanksFile">The installer</span> is on its way. Didn't start? <a href="#" id="thanksRetry">Try again</a>.</p>
+    <div class="ask">Enjoying YtCut?<span>It's free and made by one person. Support goes a long way.</span></div>
+    <a class="support coffee" href="https://buymeacoffee.com/akplayzmc" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 2.5v2.5M12 2.5v2.5"/></svg>
+      Buy me a coffee
+    </a>
+    <a class="support yt" href="https://www.youtube.com/@AKplayzMC?sub_confirmation=1" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3V9Z" fill="currentColor"/></svg>
+      Subscribe on YouTube
+    </a>
+    <button class="later" type="button" data-close>Maybe later</button>
+  </div>
+</div>
+
 <script>
   // ===== Edit this when you publish a new version =====
   // "file" is a full link to the installer. They live in the GitHub release of akplayzmc/YT-Cut:
@@ -314,6 +360,29 @@
     const btn = document.querySelector(`[data-dl="${mine}"]`);
     if (!btn.classList.contains('off')) { cta.href = btn.href; if (btn.hasAttribute('download')) cta.setAttribute('download', btn.getAttribute('download')); }
   }
+
+  // Support pop-up: the download starts as normal, the pop-up appears on top of the page
+  const modal = document.getElementById('thanks'), retry = document.getElementById('thanksRetry');
+  let lastFocus = null;
+  function openThanks(link) {
+    document.getElementById('thanksFile').textContent = decodeURIComponent(link.href.split('/').pop().split('?')[0]);
+    retry.href = link.href;
+    lastFocus = document.activeElement;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    setTimeout(() => modal.querySelector('.support.coffee').focus(), 50);
+  }
+  function closeThanks() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    if (lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll('.dl, #heroCta').forEach(a => a.addEventListener('click', () => {
+    if (a.classList.contains('off') || a.getAttribute('href').startsWith('#')) return;
+    setTimeout(() => openThanks(a), 300); // let the browser start the download first
+  }));
+  modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) closeThanks(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeThanks(); });
 </script>
 </body>
 </html>
