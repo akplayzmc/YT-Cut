@@ -163,7 +163,7 @@
     <h1>Cut the part you want.<br><em>Save it in seconds.</em></h1>
     <p>Paste a video link, pick the start and end, choose MP4, MOV, MP3 or M4A, and YtCut saves just that clip. Available for Windows, macOS and Android.</p>
     <a class="cta" id="heroCta" href="#download">Download YtCut <small id="heroOs"></small></a>
-    <div class="features"><span>Exact clip ranges</span><span>Up to 4K</span><span>MP4 · MOV · MP3 · M4A</span><span>Editing-friendly H.264</span><span>Save thumbnails</span><span>Built-in updater</span></div>
+    <div class="features"><span>Exact clip ranges</span><span>Up to 4K</span><span>MP4 · MOV · MP3 · M4A</span><span>Editing-friendly H.264</span><span>Video, thumbnail or both</span><span>Built-in updater</span></div>
   </header>
 
   <section id="download">
@@ -268,9 +268,9 @@
   <section id="use">
     <div class="eyebrow">Using YtCut</div>
     <h2>Four steps to a clip</h2>
-    <p class="sub">The app works the same on every device. Want just the picture? Press <span class="ui">Save thumbnail</span> under the video title to save its thumbnail as a full-size JPG (Windows and Android; coming to macOS in the next update).</p>
+    <p class="sub">The app works the same on every device. After loading a link, pick what you want at the top: <span class="ui">Video</span>, <span class="ui">Thumbnail</span> (a full-size JPG) or <span class="ui">Both</span>. Thumbnails are on Windows and Android, and coming to macOS in the next update.</p>
     <div class="use">
-      <div class="box"><div class="n">01</div><h4>Paste a link</h4><p>Paste a video link and press <span class="ui">Load</span>. You'll see the title, length and available qualities.</p></div>
+      <div class="box"><div class="n">01</div><h4>Paste a link</h4><p>Paste a video link and press <span class="ui">Load</span>, then choose <span class="ui">Video</span>, <span class="ui">Thumbnail</span> or <span class="ui">Both</span>.</p></div>
       <div class="box"><div class="n">02</div><h4>Pick the range</h4><p>Drag the slider, use the presets, or type times like <span class="ui">90</span>, <span class="ui">1:30</span> or <span class="ui">1:02:03</span>.</p></div>
       <div class="box"><div class="n">03</div><h4>Choose a format</h4><p>MP4 plays anywhere, MOV suits QuickTime, and MP3 or M4A save the audio only.</p></div>
       <div class="box"><div class="n">04</div><h4>Download</h4><p>Cuts are re-encoded so they start and end exactly where you chose. Short clips take seconds.</p></div>
@@ -284,7 +284,7 @@
     <details><summary>A video stopped loading or downloading</summary><p>YouTube changes regularly, which breaks older versions of the downloader inside YtCut. Click <span class="ui">Update yt-dlp</span>: it's in the <span class="ui">YtCut</span> menu on Windows and at the top of the screen on Android. YtCut also checks for updates automatically once a week.</p></details>
     <details><summary>The video has sound but no picture</summary><p>Some players can't decode every video format. Turn on <span class="ui">Editing-friendly H.264</span> before downloading. H.264 plays on every device and in every editor (max 1080p).</p></details>
     <details><summary>Where are my files?</summary><p>Windows and macOS: your <b>Downloads</b> folder. Use <span class="ui">Show in folder</span> after a download. Android: videos are in your <b>Gallery</b> (DCIM/YtCut), thumbnails too (Pictures/YtCut), and audio in <b>Music</b> (Music/YtCut).</p></details>
-    <details><summary>How do I save a video's thumbnail?</summary><p>Load the video, then press <span class="ui">Save thumbnail</span> under its title. YtCut saves the highest-resolution version as a JPG, named after the File name field. It goes to Downloads on Windows and to your Gallery on Android. macOS gets it in the next update.</p></details>
+    <details><summary>How do I save a video's thumbnail?</summary><p>Load the video, choose <span class="ui">Thumbnail</span> at the top (or <span class="ui">Both</span> to get the video too), and press <span class="ui">Download thumbnail</span>. YtCut saves the highest-resolution version as a JPG, named after the File name field. It goes to Downloads on Windows and to your Gallery on Android. macOS gets it in the next update.</p></details>
     <details><summary>Clipping is slow on my phone</summary><p>To cut at the exact second, the clip is re-encoded, which is hard work for a phone. Full videos without a cut download much faster.</p></details>
     <details><summary>Live streams don't work</summary><p>That's expected. YtCut needs a finished video with a known length.</p></details>
     <details><summary>Is it legal to use YtCut?</summary><p>The app is a tool. Whether a particular download is allowed depends on the video, the rights holder, the website's terms and the law where you live. Downloading your own videos, or videos with a licence that allows it, is generally fine. Some websites, including YouTube, don't allow downloading in their terms of service. You are responsible for what you download. See the <a href="legal.html">Terms of use and disclaimer</a>.</p></details>
@@ -330,9 +330,9 @@
   // A path relative to this page (e.g. downloads/...) also works if you host the files next to the page.
   // Leave "file" empty ("") to show "Coming soon".
   const DOWNLOADS = {
-    windows: { file: 'https://github.com/akplayzmc/YT-Cut/releases/latest/download/YtCut-Setup-1.0.3.exe', version: '1.0.3', size: '194 MB' },
+    windows: { file: 'https://github.com/akplayzmc/YT-Cut/releases/latest/download/YtCut-Setup-1.0.4.exe', version: '1.0.4', size: '194 MB' },
     mac:     { file: 'https://github.com/akplayzmc/YT-Cut/releases/latest/download/YtCut-macOS-1.0.0.zip', version: '1.0.0', size: '127 MB' },
-    android: { file: 'https://github.com/akplayzmc/YT-Cut/releases/latest/download/YtCut-1.0.2.apk',       version: '1.0.2', size: '59 MB' }
+    android: { file: 'https://github.com/akplayzmc/YT-Cut/releases/latest/download/YtCut-1.0.3.apk',       version: '1.0.3', size: '59 MB' }
   };
   // =====================================================
 
